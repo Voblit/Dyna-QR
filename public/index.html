@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dnya qr</title>
+  <!-- Tiny QR library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: #222;
+      background: #fff;
+      font: 15px/1.5 Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .header-inner,
+    main,
+    footer {
+      width: min(100% - 32px, 760px);
+      margin: 0 auto;
+    }
+
+    .header-inner {
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      color: #222;
+      font-size: 17px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+    }
+
+    nav a {
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding-top: 42px;
+      padding-bottom: 50px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .intro {
+      margin: 0 0 28px;
+      color: #555;
+    }
+
+    .form-section {
+      max-width: 520px;
+    }
+
+    h2 {
+      margin: 0 0 5px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .hint {
+      margin: 0 0 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin: 0 0 5px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      height: 38px;
+      margin: 0 0 16px;
+      padding: 8px 10px;
+      border: 1px solid #aaa;
+      border-radius: 3px;
+      background: #fff;
+      color: #222;
+      font: inherit;
+    }
+
+    input:focus {
+      outline: 2px solid #7aa7d9;
+      outline-offset: 1px;
+      border-color: #567fae;
+    }
+
+    button {
+      padding: 9px 14px;
+      border: 1px solid #1464a5;
+      border-radius: 3px;
+      background: #1976bd;
+      color: #fff;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1464a5;
+    }
+
+    #message {
+      min-height: 22px;
+      margin: 10px 0 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* Fullscreen Modal Overlay Styling */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal-box {
+      background: #fff;
+      padding: 28px;
+      border-radius: 6px;
+      width: min(90%, 420px);
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    #modal-box h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #1976bd;
+    }
+
+    #modal-box p {
+      margin: 0 0 15px;
+      word-break: break-all;
+      font-size: 14px;
+    }
+
+    #modal-qrcode {
+      margin: 15px auto;
+      padding: 10px;
+      background: #fff;
+      display: inline-block;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    .secondary-btn {
+      background: #555;
+      border-color: #444;
+    }
+    .secondary-btn:hover {
+      background: #333;
+    }
+
+    .about {
+      max-width: 520px;
+      margin-top: 34px;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+    }
+
+    .about p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    footer {
+      padding: 16px 0 22px;
+      border-top: 1px solid #ddd;
+      color: #666;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a class="brand" href="/">dyna qr</a>
+      <nav aria-label="Main navigation">
+        <a href="#create">Create</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Dynamic QR codes!</h1>
+    <p class="intro">
+      Make a redirect QR code, and edit it afterwards without having to regenerate the code. Completely free and self hosted, no propriatary nonsense like tinyurl or bitly
+    </p>
+
+    <section class="form-section" id="create">
+      <h2>make a new redirect</h2>
+      <p class="hint">input a short address and the full URL, and get the QR. You'll be able to change the full URL that the short address points to later, but changing the short address will unfortunately require a new QR code.</p>
+
+      <form id="create-form">
+        <label for="cute_slug">Short address</label>
+        <input
+          id="cute_slug"
+          name="slug"
+          type="text"
+          placeholder="menu"
+          pattern="[A-Za-z0-9_-]+"
+          required
+        >
+
+        <label for="target">Destination URL</label>
+        <input
+          id="target"
+          name="target"
+          type="url"
+          placeholder="https://example.com/menu"
+          required
+        >
+        <label for="link_pass">Password for Editing</label>
+        <input
+          id="link_pass"
+          name="pass"
+          type="password"
+          placeholder="Password to update this link later"
+          required
+        >
+
+        <button type="submit">Create QR link</button>
+        <p id="message" aria-live="I was told your supposed to put 'polite' here, but I dont feel like that, so fuck you"></p>
+      </form>
+    </section>
+
+    <div id="modal-overlay">
+      <div id="modal-box">
+        <h3>🎉 Yay Deployed !</h3>
+        <p>Your short link: <br><a id="modal-link" href="#" target="_blank"></a></p>
+        <div id="modal-qrcode"></div>
+        <div class="modal-actions">
+          <button type="button" id="download-btn">Download QR</button>
+          <button type="button" id="close-modal-btn" class="secondary-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="about" id="about">
+      <h2>How does this works</h2>
+      <p>The QR code points to a short address, that is linked to the longer address. You can then come back and reassign the short address to a new URL without any new QR codes!.</p>
+      <p>This utility was created by Voblit using vibe.d per 'ElkMountain's request on IRC. You're welcome <3.</p>
+    </section>
+  </main>
+
+  <footer>
+    Look ma, I'm a footer!
+  </footer>
+
+  <script>
+    const form = document.getElementById("create-form");
+    const msg = document.getElementById("message");
+    const overlay = document.getElementById("modal-overlay");
+    const closeModalBtn = document.getElementById("close-modal-btn");
+    const downloadBtn = document.getElementById("download-btn");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      
+      const cute_slug = document.getElementById("cute_slug").value;
+      const target = document.getElementById("target").value;
+      const rawPassword = document.getElementById("link_pass").value;
+
+      try {
+        // Hash the password client-side using native SHA-256 via Web Crypto API
+        const encoder = new TextEncoder();
+        const data = encoder.encode(rawPassword);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashedPassword = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        const response = await fetch("/api/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            to: cute_slug, 
+            fro: target, 
+            pass: hashedPassword 
+          })
+        });
+
+        if (response.ok) {
+          msg.textContent = "";
+          form.reset();
+
+          const fullUrl = window.location.origin + "/" + cute_slug;
+          
+          const linkEl = document.getElementById("modal-link");
+          linkEl.href = fullUrl;
+          linkEl.textContent = fullUrl;
+          document.getElementById("modal-qrcode").innerHTML = "";
+          const qrInstance = new QRCode(document.getElementById("modal-qrcode"), {
+            text: fullUrl,
+            width: 160,
+            height: 160
+          });
+
+          overlay.style.display = "flex";
+
+          confetti({
+            particleCount: 120,
+            spread: 80,
+            origin: { y: 0.5 }
+          });
+
+        } else if (response.status === 403) {
+          msg.textContent = "Error: Wrong password, either remember better or stop trying to hack people >:(";
+        } else {
+          msg.textContent = "Error: something bwokie! :<";
+        }
+      } catch (err) {
+        msg.textContent = "network gave up on us...";
+      }
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      overlay.style.display = "none";
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      const img = document.querySelector("#modal-qrcode img");
+      const canvas = document.querySelector("#modal-qrcode canvas");
+      
+      let imageUrl = "";
+      if (img && img.src) {
+        imageUrl = img.src;
+      } else if (canvas) {
+        imageUrl = canvas.toDataURL("image/png");
+      }
+
+      if (imageUrl) {
+        const a = document.createElement("a");
+        a.href = imageUrl;
+        a.download = "qr-code.png";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } else {
+        alert("QR image not found for download!");
+      }
+    });
+  </script>
+</body>
+</html>

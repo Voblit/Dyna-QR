@@ -1,0 +1,17 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/dyna-qr
+dyna-qr.so
+dyna-qr.dylib
+dyna-qr.dll
+libdyna-qr.a
+dyna-qr.a
+dyna-qr.lib
+dyna-qr-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

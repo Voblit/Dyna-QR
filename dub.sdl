@@ -1,0 +1,6 @@
+name "dyna-qr"
+description "Dynamic QR code host"
+authors "Voblit"
+copyright "Copyright © 2026, Voblit"
+license "MIT"
+dependency "vibe-d" version="~>0.10.3"

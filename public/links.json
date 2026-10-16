@@ -1,0 +1,17 @@
+[
+    {
+        "fro": "https:\/\/dlang.org",
+        "pass": "secret123",
+        "to": "attempt"
+    },
+    {
+        "fro": "https:\/\/dlang.org",
+        "pass": "Isuckdick123",
+        "to": "testing2"
+    },
+    {
+        "fro": "https:\/\/example.com",
+        "pass": "661885cf205e007d650c7c19461051668e21174e003e8383c63be0022e1259f8",
+        "to": "idk"
+    }
+]
