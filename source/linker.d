@@ -6,9 +6,8 @@ import std.json;
 import std.file;
 class Linker{
 string jsonParseForTargets(string cute_slug){
-    //apparently I couldnt just load these out of a method. Fuck D.
     string the_json_with_links = readText("public/links.json");
-JSONValue root = parseJSON(the_json_with_links);
+    JSONValue root = parseJSON(the_json_with_links);
         try{
         foreach (item; root.array){
             if(cute_slug==item["to"].str){
@@ -22,9 +21,8 @@ JSONValue root = parseJSON(the_json_with_links);
         return "";
 }
 bool addNewLinkToTheJson(string cute_slug, string target, string passowrd){
-        //apparently I couldnt just load these out of a method. Fuck D.
     string the_json_with_links = readText("public/links.json");
-JSONValue root = parseJSON(the_json_with_links);
+    JSONValue root = parseJSON(the_json_with_links);
     bool foundCute_SlugThatAlreadyExists = false;
     foreach (ref item; root.array){
         if(cute_slug == item["to"].str){
