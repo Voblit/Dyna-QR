@@ -1,4 +1,3 @@
-//linker, parses the JSON and knows which links go from input to output
 import vibe.vibe;
 import std.file : readText;
 import std.stdio;
