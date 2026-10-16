@@ -5,7 +5,7 @@ A simple, self-hosted dynamic QR code and redirect manager built with **D** and 
 ## what it does
 * **Dynamic Redirects:** Change where a short link points to later without having to reprint or regenerate your QR code.
 * **Password Protected:** Updating an existing link requires the correct password, which is hashed.
-* **Instant QR & Download:** lets you download teh 
+* **Instant QR & Download:** lets you download teh QR code
 * **Celebration:** :> 
 
 ## what's inside
